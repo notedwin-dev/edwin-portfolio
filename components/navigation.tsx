@@ -25,9 +25,7 @@ export function Navigation({ onMenuClick }: { onMenuClick?: () => void }) {
   }
 
   const handleDownloadCV = () => {
-    // Add your CV download logic here
-    // For now, it will open a placeholder or you can add an actual CV file
-    console.log("Download CV clicked")
+    window.open("/Edwin-Ng-Resume.pdf", "_blank");
   }
 
   return (
