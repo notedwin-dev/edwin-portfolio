@@ -179,8 +179,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
         </div>
       </div>{" "}
-      {/* Timeline Sidebar - Positioned within content */}
-      <div className="fixed left-6 top-32 z-30 hidden lg:block">
+      {/* Timeline Sidebar - Hidden on medium, visible on large screens */}
+      <div className="fixed left-6 top-32 z-30 hidden xl:block">
         <div
           className={`group bg-black/90 backdrop-blur-md rounded-xl border border-gray-800 shadow-2xl transition-all duration-700 ease-out hover:shadow-3xl`}>
           <nav className="p-1">
