@@ -41,25 +41,40 @@ export function Experience() {
         "Implemented secure user auth with RBAC and optimized PostgreSQL queries",
         "Set up CI/CD pipelines, improving deployment speed and reliability",
       ],
-      technologies: ["Vue.js", "TypeScript", "Express.js", "Prisma ORM", "PostgreSQL", "Redis", "TailwindCSS"],
+      technologies: [
+        "Vue.js",
+        "TypeScript",
+        "Express.js",
+        "Prisma ORM",
+        "PostgreSQL",
+        "Redis",
+        "TailwindCSS",
+      ],
     },
     {
-      title: "Community Hero & Developer",
+      title: "Community Hero (Volunteer)",
       company: "Autocode.com",
       location: "Remote",
       period: "Aug 2021 – 2024",
       description:
-        "Started as a self-taught developer building Discord bots, evolved into a community leader helping 200+ developers monthly. Created templates, apps, and provided technical support.",
+        "Seleted as an Autocode Community Hero to help moderate Discord support channels and assist community members. Part of a staff-picked volunteer program for professionals passionate about helping others learn and grow in the developer community.",
       highlights: [
-        "Helped over 200+ community members monthly with coding questions",
-        "Created code snippets, templates, and fully-featured automation apps",
-        "Assisted with community moderation and code review processes",
-        "Built Discord bots and web services using Node.js and JavaScript",
-        "Transitioned from contributor to recognized community leader",
+        "Helped over 250+ community members monthly, from all different skill levels, with their Autocode projects and questions",
+        "Answered coding questions and provided constructive feedback",
+        "Contributed code snippets and open source 'App' repositories",
+        "Reviewed community snippets and 'Apps' on behalf of Autocode staff",
+        "Assisted with Discord channel moderation and community management",
+        "Made the community a better place through mentorship and support",
       ],
-      technologies: ["Node.js", "JavaScript", "Discord.js", "API Integrations", "Webhooks"],
+      technologies: [
+        "Node.js",
+        "JavaScript",
+        "Discord.js",
+        "API Integrations",
+        "Webhooks",
+      ],
     },
-  ]
+  ];
 
   return (
     <section ref={sectionRef} id="experience" className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-950/50">
