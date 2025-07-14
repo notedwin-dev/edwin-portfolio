@@ -175,118 +175,118 @@ export function Projects() {
                   <DialogTrigger asChild>
                     <Card className="bg-gray-900/50 border-gray-800 hover:bg-gray-900/70 transition-all duration-300 group overflow-hidden cursor-pointer">
                       <CardContent className="p-0">
-                      {/* Project Cover Image */}
-                      {coverImageUrl && (
-                        <div className="relative w-full h-48 overflow-hidden">
-                          <Image
-                            src={coverImageUrl}
-                            alt={`${project.title} preview`}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                            quality={85}
-                            onError={(e) => {
-                              // Hide image on error
-                              const target = e.target as HTMLImageElement
-                              target.style.display = 'none'
-                            }}
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
-                        </div>
-                      )}
-
-                      <div className="p-6">
-                        <div className="flex items-center mb-4">
-                          <div className="p-3 bg-gray-800 rounded-lg mr-4 group-hover:bg-gray-700 transition-colors">
-                            {project.icon}
+                        {/* Project Cover Image */}
+                        {coverImageUrl && (
+                          <div className="relative w-full h-48 overflow-hidden">
+                            <Image
+                              src={coverImageUrl}
+                              alt={`${project.title} preview`}
+                              fill
+                              className="object-cover group-hover:scale-105 transition-transform duration-300"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                              quality={85}
+                              onError={(e) => {
+                                // Hide image on error
+                                const target = e.target as HTMLImageElement;
+                                target.style.display = "none";
+                              }}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
                           </div>
-                          <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                        </div>
+                        )}
 
-                        <p className="text-gray-300 mb-4 leading-relaxed line-clamp-3">
-                          {project.description}
-                        </p>
-
-                        <div className="mb-6">
-                          <div className="flex flex-wrap gap-2">
-                            {project.technologies.slice(0, 3).map((tech, idx) => (
-                              <Badge
-                                key={idx}
-                                variant="secondary"
-                                className="bg-gray-800 text-gray-300 hover:bg-gray-700 text-xs"
-                              >
-                                {tech}
-                              </Badge>
-                            ))}
-                            {project.technologies.length > 3 && (
-                              <Badge
-                                variant="secondary"
-                                className="bg-gray-700 text-gray-400 text-xs"
-                              >
-                                +{project.technologies.length - 3} more
-                              </Badge>
-                            )}
+                        <div className="p-6">
+                          <div className="flex items-center mb-4">
+                            <div className="p-3 bg-gray-800 rounded-lg mr-4 group-hover:bg-gray-700 transition-colors">
+                              {project.icon}
+                            </div>
+                            <h3 className="text-xl font-bold text-white">
+                              {project.title}
+                            </h3>
                           </div>
-                        </div>
 
-                        <div className="flex space-x-3">
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                          >
-                            <Info className="h-4 w-4 mr-2" />
-                            Details
-                          </Button>
-                          {!project.isPrivate && (
+                          <p className="text-gray-300 mb-4 leading-relaxed line-clamp-3">
+                            {project.description}
+                          </p>
+
+                          <div className="mb-6">
+                            <div className="flex flex-wrap gap-2">
+                              {project.technologies
+                                .slice(0, 3)
+                                .map((tech, idx) => (
+                                  <Badge
+                                    key={idx}
+                                    variant="secondary"
+                                    className="bg-gray-800 text-gray-300 hover:bg-gray-700 text-xs">
+                                    {tech}
+                                  </Badge>
+                                ))}
+                              {project.technologies.length > 3 && (
+                                <Badge
+                                  variant="secondary"
+                                  className="bg-gray-700 text-gray-400 text-xs">
+                                  +{project.technologies.length - 3} more
+                                </Badge>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex space-x-3">
                             <Button
                               variant="outline"
                               size="sm"
-                              className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                              onClick={(e) => {
-                                e.stopPropagation()
-                                window.open(project.links.github, "_blank")
-                              }}
-                            >
-                              <Github className="h-4 w-4 mr-2" />
-                              Code
+                              className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black">
+                              <Info className="h-4 w-4 mr-2" />
+                              Details
                             </Button>
-                          )}
-                          {project.links.demo && project.links.demo !== "#" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              window.open(project.links.demo, "_blank")
-                            }}
-                          >
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Demo
-                          </Button>
-                        )}
-                        {project.links.docs && project.links.docs !== "#" && (
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                            onClick={(e) => {
-                              e.stopPropagation()
-                              window.open(project.links.docs, "_blank")
-                            }}
-                          >
-                            <ExternalLink className="h-4 w-4 mr-2" />
-                            Docs
-                          </Button>
-                        )}
+                            {!project.isPrivate && (
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  window.open(project.links.github, "_blank");
+                                }}>
+                                <Github className="h-4 w-4 mr-2" />
+                                Code
+                              </Button>
+                            )}
+                            {project.links.demo &&
+                              project.links.demo !== "#" && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    window.open(project.links.demo, "_blank");
+                                  }}>
+                                  <ExternalLink className="h-4 w-4 mr-2" />
+                                  Demo
+                                </Button>
+                              )}
+                            {project.links.docs &&
+                              project.links.docs !== "#" && (
+                                <Button
+                                  variant="outline"
+                                  size="sm"
+                                  className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    window.open(project.links.docs, "_blank");
+                                  }}>
+                                  <ExternalLink className="h-4 w-4 mr-2" />
+                                  Docs
+                                </Button>
+                              )}
+                          </div>
                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
                   </DialogTrigger>
-                  <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl">
-                    <DialogHeader>
+                  <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] flex flex-col">
+                    <DialogHeader className="flex-shrink-0">
                       <DialogTitle className="flex items-center text-xl">
                         <div className="p-2 bg-gray-800 rounded-lg mr-3">
                           {project.icon}
@@ -294,7 +294,7 @@ export function Projects() {
                         {project.title}
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-6">
+                    <div className="space-y-6 overflow-y-auto flex-1 pr-2">
                       {/* Project Cover Image in Dialog */}
                       {coverImageUrl && (
                         <div className="relative w-full h-64 overflow-hidden rounded-lg">
@@ -307,22 +307,26 @@ export function Projects() {
                             quality={90}
                             onError={(e) => {
                               // Hide image on error
-                              const target = e.target as HTMLImageElement
-                              target.style.display = 'none'
+                              const target = e.target as HTMLImageElement;
+                              target.style.display = "none";
                             }}
                           />
                         </div>
                       )}
-                      
-                      <p className="text-gray-300 leading-relaxed">{project.description}</p>
-                      
+
+                      <p className="text-gray-300 leading-relaxed">
+                        {project.description}
+                      </p>
+
                       <div>
                         <h4 className="text-sm font-semibold text-gray-400 mb-3 uppercase tracking-wide">
                           Key Features
                         </h4>
                         <ul className="space-y-2">
                           {project.highlights.map((highlight, idx) => (
-                            <li key={idx} className="text-gray-300 text-sm flex items-start">
+                            <li
+                              key={idx}
+                              className="text-gray-300 text-sm flex items-start">
                               <span className="text-gray-500 mr-2">•</span>
                               {highlight}
                             </li>
@@ -339,22 +343,22 @@ export function Projects() {
                             <Badge
                               key={idx}
                               variant="secondary"
-                              className="bg-gray-800 text-gray-300 hover:bg-gray-700 text-xs"
-                            >
+                              className="bg-gray-800 text-gray-300 hover:bg-gray-700 text-xs">
                               {tech}
                             </Badge>
                           ))}
                         </div>
                       </div>
 
-                      <div className="flex space-x-3 pt-4">
+                      <div className="flex space-x-3 pt-4 flex-shrink-0">
                         {!project.isPrivate && (
                           <Button
                             variant="outline"
                             size="sm"
                             className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                            onClick={() => window.open(project.links.github, "_blank")}
-                          >
+                            onClick={() =>
+                              window.open(project.links.github, "_blank")
+                            }>
                             <Github className="h-4 w-4 mr-2" />
                             Code
                           </Button>
@@ -364,8 +368,9 @@ export function Projects() {
                             variant="outline"
                             size="sm"
                             className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                            onClick={() => window.open(project.links.demo, "_blank")}
-                          >
+                            onClick={() =>
+                              window.open(project.links.demo, "_blank")
+                            }>
                             <ExternalLink className="h-4 w-4 mr-2" />
                             Demo
                           </Button>
@@ -375,8 +380,9 @@ export function Projects() {
                             variant="outline"
                             size="sm"
                             className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black"
-                            onClick={() => window.open(project.links.docs, "_blank")}
-                          >
+                            onClick={() =>
+                              window.open(project.links.docs, "_blank")
+                            }>
                             <ExternalLink className="h-4 w-4 mr-2" />
                             Docs
                           </Button>
@@ -385,7 +391,7 @@ export function Projects() {
                     </div>
                   </DialogContent>
                 </Dialog>
-              )
+              );
             })}
           </div>
         </div>
