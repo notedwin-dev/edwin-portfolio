@@ -285,8 +285,8 @@ export function Projects() {
                       </CardContent>
                     </Card>
                   </DialogTrigger>
-                  <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] flex flex-col">
-                    <DialogHeader className="flex-shrink-0">
+                  <DialogContent className="bg-gray-900 border-gray-800 text-white max-w-2xl max-h-[90vh] sm:max-h-[85vh] md:max-h-[80vh] flex flex-col p-0">
+                    <DialogHeader className="flex-shrink-0 p-6 pb-0">
                       <DialogTitle className="flex items-center text-xl">
                         <div className="p-2 bg-gray-800 rounded-lg mr-3">
                           {project.icon}
@@ -294,7 +294,7 @@ export function Projects() {
                         {project.title}
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-6 overflow-y-auto flex-1 pr-2">
+                    <div className="space-y-6 overflow-y-auto flex-1 px-6 py-4 scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-gray-800 hover:scrollbar-thumb-gray-500">
                       {/* Project Cover Image in Dialog */}
                       {coverImageUrl && (
                         <div className="relative w-full h-64 overflow-hidden rounded-lg">
@@ -350,7 +350,7 @@ export function Projects() {
                         </div>
                       </div>
 
-                      <div className="flex space-x-3 pt-4 flex-shrink-0">
+                      <div className="flex space-x-3 pt-4 pb-2 px-6 flex-shrink-0 bg-gray-900 border-t border-gray-800">
                         {!project.isPrivate && (
                           <Button
                             variant="outline"
