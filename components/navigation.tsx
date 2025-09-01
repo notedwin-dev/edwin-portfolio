@@ -67,10 +67,11 @@ export function Navigation({ onMenuClick }: { onMenuClick?: () => void }) {
             <Button
               variant="outline"
               size="sm"
-              className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black hidden md:flex text-xs sm:text-sm"
+              className="bg-transparent border-gray-600 text-white hover:bg-white hover:text-black text-xs sm:text-sm"
               onClick={handleDownloadCV}>
               <Download className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
-              Download CV
+              <span className="hidden sm:inline">Download CV</span>
+              <span className="sm:hidden">CV</span>
             </Button>
             <Button
               variant="outline"

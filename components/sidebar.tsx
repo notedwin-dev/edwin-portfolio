@@ -13,6 +13,7 @@ import {
   Pin,
   PinOff,
   Stars,
+  Download,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -23,7 +24,8 @@ interface SidebarProps {
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const [isPinned, setIsPinned] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");  const scrollToSection = (id: string) => {
+  const [activeSection, setActiveSection] = useState("hero");
+  const scrollToSection = (id: string) => {
     // Immediately set the active section for responsive feedback
     setActiveSection(id);
 
@@ -40,7 +42,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       // Use native smooth scrolling for simplicity and reliability
       window.scrollTo({
         top: targetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
 
       // Force a scroll detection update after a short delay
@@ -50,30 +52,30 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     }
 
     onClose();
-  };  // Detect which section is currently in view
+  }; // Detect which section is currently in view
   useEffect(() => {
     const handleScroll = () => {
       const sections = navigationItems.map((item) => item.id);
       const windowHeight = window.innerHeight;
-      
+
       let activeSection = sections[0];
-      
+
       // Simple approach: find the section whose top is closest to the top of viewport
       // but still visible (not scrolled past)
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId);
         if (!element) continue;
-        
+
         const rect = element.getBoundingClientRect();
-        
+
         // If section top is in the upper 60% of viewport and section is visible
         if (rect.top <= windowHeight * 0.6 && rect.bottom > 0) {
           activeSection = sectionId;
         }
       }
-      
+
       setActiveSection(activeSection);
-    };// Add a slight delay to handle rapid scrolling and navigation jumps
+    }; // Add a slight delay to handle rapid scrolling and navigation jumps
     let scrollTimeout: NodeJS.Timeout;
     const debouncedHandleScroll = () => {
       clearTimeout(scrollTimeout);
@@ -172,7 +174,18 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
 
           {/* Footer */}
-          <div className="p-6 border-t border-gray-800/50">
+          <div className="p-6 border-t border-gray-800/50 space-y-4">
+            {/* Resume Download Button */}
+            <Button
+              onClick={() => {
+                window.open("/Edwin-Ng-Resume.pdf", "_blank");
+                onClose();
+              }}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-500/25"
+              size="sm">
+              <Download className="h-4 w-4 mr-2" />
+              Download Resume
+            </Button>
             <div className="text-center text-sm text-gray-500">
               Tap anywhere outside to close
             </div>
