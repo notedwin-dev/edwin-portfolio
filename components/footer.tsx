@@ -1,6 +1,14 @@
 "use client"
 
-import { Github, Linkedin, Mail, Heart, ArrowUp, Download } from "lucide-react";
+import {
+  Github,
+  Linkedin,
+  Mail,
+  Heart,
+  ArrowUp,
+  Download,
+  Handshake,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Footer() {
@@ -106,25 +114,28 @@ export function Footer() {
               <p>📍 Kuala Lumpur, Malaysia</p>
               <p>💼 Available for freelance work</p>
             </div>{" "}
-            <Button
-              onClick={() =>
-                document
-                  .getElementById("contact")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              variant="outline"
-              size="sm"
-              className="bg-transparent border-gray-600 text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 mb-3">
-              Let's Work Together
-            </Button>
-            <Button
-              onClick={() => window.open("/Edwin-Ng-Resume.pdf", "_blank")}
-              variant="outline"
-              size="sm"
-              className="bg-transparent border-gray-600 text-white hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-300 w-full">
-              <Download className="h-4 w-4 mr-2" />
-              Download Resume
-            </Button>
+            <div className="flex justify-between space-x-2">
+              <Button
+                onClick={() =>
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-gray-600 text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 mb-3">
+                <Handshake className="h-4 w-4 mr-2" />
+                Let's Work Together
+              </Button>
+              <Button
+                onClick={() => window.open("/Edwin-Ng-Resume.pdf", "_blank")}
+                variant="outline"
+                size="sm"
+                className="bg-transparent border-gray-600 text-white hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-300 w-full">
+                <Download className="h-4 w-4 mr-2" />
+                Download Resume
+              </Button>
+            </div>
           </div>
         </div>
 
