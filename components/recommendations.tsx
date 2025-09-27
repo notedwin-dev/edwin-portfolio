@@ -82,8 +82,7 @@ export function Recommendations() {
       relationship:
         "Mohamed was senior to Edwin but didn't manage Edwin directly",
       linkedinUrl: "https://www.linkedin.com/in/mohamed-ashraf-2155831aa",
-      profileImage:
-        "https://media.licdn.com/dms/image/v2/D5603AQFLBzoCErzdhQ/profile-displayphoto-shrink_800_800/B56Zcb3Ma.GsAc-/0/1748519146005?e=1756339200&v=beta&t=7bmHkAwTxb1u2_yXcE5BhO8rN7h9J7yN6jJIUaVtJsE",
+      profileImage: "/images/recommendations/mohamed-ashraf.jpg",
       content:
         "I had the pleasure of working alongside Edwin Ng in a professional capacity where I served as a senior colleague. Edwin consistently demonstrated exceptional intelligence and a remarkable ability to stay ahead of the curve with the latest technologies. His proactive approach to learning and applying cutting-edge solutions made him a valuable asset in our collaborative efforts. I highly recommend Edwin for any role that requires a forward-thinking and highly skilled professional.",
       highlights: [
@@ -100,8 +99,7 @@ export function Recommendations() {
       date: "August 17, 2025",
       relationship: "Alex hired Edwin as a freelance developer on Fiverr",
       linkedinUrl: "https://www.linkedin.com/in/alexsl2174",
-      profileImage:
-        "https://media.licdn.com/dms/image/v2/C5103AQGkmdtnBc3TBA/profile-displayphoto-shrink_100_100/profile-displayphoto-shrink_100_100/0/1516585988449?e=1759363200&v=beta&t=N00uKwk8SKcZny9rvH8pS1f0tJuhw5BF-lrGLsLGAms",
+      profileImage: "/images/recommendations/alex-lolando.jpg",
       content:
         "I would really recommend hiring Edwin if you are in any need of a developer. Personally he has helped me with a discord bot since November 2024 and I have never seen a more dedicated developer. He is really great at what he does and quick to bug fix if need be. I am really satisfied to have found them and I couldn't recommend them enough!",
       highlights: [
