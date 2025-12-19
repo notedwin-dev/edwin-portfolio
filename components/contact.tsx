@@ -8,11 +8,13 @@ import { Textarea } from "@/components/ui/textarea"
 import { Mail, MapPin, Send, Github, Linkedin } from "lucide-react"
 import { submitContactForm } from "@/app/actions"
 import { useActionState } from "react"
+import { Turnstile } from "@marsidev/react-turnstile"
 
 export function Contact() {
   const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
   const [state, action, isPending] = useActionState(submitContactForm, null)
+  const [token, setToken] = useState<string>("")
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -154,9 +156,20 @@ export function Contact() {
                     />
                   </div>
 
+                  <div className="flex justify-center">
+                    <Turnstile
+                      siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || ""}
+                      onSuccess={(token) => setToken(token)}
+                      options={{
+                        theme: "dark",
+                      }}
+                    />
+                    <input type="hidden" name="cf-turnstile-response" value={token} />
+                  </div>
+
                   <Button
                     type="submit"
-                    disabled={isPending}
+                    disabled={isPending || !token}
                     className="w-full bg-white text-black hover:bg-gray-200 transition-colors"
                   >
                     {isPending ? (

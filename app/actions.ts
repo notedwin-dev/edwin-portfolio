@@ -102,17 +102,60 @@ const forwardConfirmationEmail = async (
   }
 };
 
+async function verifyTurnstileToken(token: string) {
+  const secretKey = process.env.TURNSTILE_SECRET_KEY;
+  if (!secretKey) {
+    console.error("TURNSTILE_SECRET_KEY is not set");
+    return { success: false, message: "Server configuration error" };
+  }
+
+  const formData = new FormData();
+  formData.append("secret", secretKey);
+  formData.append("response", token);
+
+  try {
+    const result = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        body: formData,
+        method: "POST",
+      }
+    );
+
+    const outcome = await result.json();
+    if (outcome.success) {
+      return { success: true };
+    } else {
+      console.error("Turnstile verification failed:", outcome["error-codes"]);
+      return { success: false, message: "Invalid captcha. Please try again." };
+    }
+  } catch (error) {
+    console.error("Turnstile verification error:", error);
+    return { success: false, message: "Verification service unavailable" };
+  }
+}
+
 export async function submitContactForm(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
   const subject = formData.get("subject") as string;
   const message = formData.get("message") as string;
+  const turnstileToken = formData.get("cf-turnstile-response") as string;
 
   // Basic validation
-  if (!name || !email || !subject || !message) {
+  if (!name || !email || !subject || !message || !turnstileToken) {
     return {
       success: false,
-      message: "Please fill in all fields.",
+      message: "Please fill in all fields and complete the captcha.",
+    };
+  }
+
+  // Verify Turnstile token
+  const verification = await verifyTurnstileToken(turnstileToken);
+  if (!verification.success) {
+    return {
+      success: false,
+      message: verification.message || "Captcha verification failed.",
     };
   }
 
