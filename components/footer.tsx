@@ -125,7 +125,8 @@ export function Footer() {
                 size="sm"
                 className="bg-transparent border-gray-600 text-white hover:bg-gradient-to-r hover:from-purple-500 hover:to-blue-500 hover:text-white hover:border-transparent hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/25 mb-3">
                 <Handshake className="h-4 w-4 mr-2" />
-                Let's Work Together
+                <span className="hidden sm:inline">Let's Work Together</span>
+                <span className="sm:hidden">Contact</span>
               </Button>
               <Button
                 onClick={() => window.open("/Edwin-Ng-Resume.pdf", "_blank")}
@@ -133,7 +134,8 @@ export function Footer() {
                 size="sm"
                 className="bg-transparent border-gray-600 text-white hover:bg-blue-600 hover:border-blue-500 hover:scale-105 transition-all duration-300 w-full">
                 <Download className="h-4 w-4 mr-2" />
-                Download Resume
+                <span className="hidden sm:inline">Download CV</span>
+                <span className="sm:hidden">CV</span>
               </Button>
             </div>
           </div>
