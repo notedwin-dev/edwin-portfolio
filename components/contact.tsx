@@ -165,6 +165,15 @@ export function Contact() {
                       }}
                     />
                     <input type="hidden" name="cf-turnstile-response" value={token} />
+                    {/* Honeypot field */}
+                    <div className="sr-only" aria-hidden="true">
+                      <input
+                        type="text"
+                        name="website_url"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
                   </div>
 
                   <Button

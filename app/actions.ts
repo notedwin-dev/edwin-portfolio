@@ -1,6 +1,7 @@
 "use server"
 import nodemailer from "nodemailer"
-import { headers } from "next/headers";
+import { headers } from "next/headers"
+import { promises as dns } from "dns"
 
 // Create reusable transporter object using SMTP transport
 const createTransporter = () => {
@@ -157,12 +158,74 @@ async function verifyTurnstileToken(token: string, remoteip?: string) {
   }
 }
 
+const SPAM_KEYWORDS = [
+  "seo",
+  "marketing",
+  "promotion",
+  "increase traffic",
+  "buy now",
+  "crypto",
+  "investment",
+  "casino",
+  "lottery",
+  "winner",
+  "congratulations",
+  "viagra",
+  "pills",
+  "weight loss",
+  "earn money",
+  "work from home",
+  "passive income",
+  "bitcoin",
+  "ethereum",
+  "trading",
+  "forex",
+  "wealth",
+  "rich",
+  "millionaire",
+];
+
+function isSpam(subject: string, message: string): boolean {
+  const content = (subject + " " + message).toLowerCase();
+  // Check for keywords
+  if (SPAM_KEYWORDS.some((keyword) => content.includes(keyword))) {
+    return true;
+  }
+  // Check for excessive links
+  const linkCount = (content.match(/https?:\/\//g) || []).length;
+  if (linkCount > 2) {
+    return true;
+  }
+  return false;
+}
+
+async function hasValidMXRecord(email: string): Promise<boolean> {
+  const domain = email.split("@")[1];
+  if (!domain) return false;
+  try {
+    const mx = await dns.resolveMx(domain);
+    return mx && mx.length > 0;
+  } catch (error) {
+    return false;
+  }
+}
+
 export async function submitContactForm(prevState: any, formData: FormData) {
   const name = formData.get("name") as string;
   const email = formData.get("email") as string;
   const subject = formData.get("subject") as string;
   const message = formData.get("message") as string;
   const turnstileToken = formData.get("cf-turnstile-response") as string;
+  const honeypot = formData.get("website_url") as string;
+
+  // Honeypot check - if filled, it's likely a bot
+  if (honeypot) {
+    console.warn("Honeypot triggered by submission from:", email);
+    return {
+      success: true, // Return success to the bot to avoid retries
+      message: "Thank you for your message! I'll get back to you soon.",
+    };
+  }
 
   // Get client IP
   const headersList = await headers();
@@ -176,6 +239,16 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "Please fill in all fields and complete the captcha.",
+    };
+  }
+
+  // Spam filter
+  if (isSpam(subject, message)) {
+    console.warn("Spam filter triggered by submission from:", email);
+    return {
+      success: false,
+      message:
+        "Your message was flagged as potential spam. Please revise and try again.",
     };
   }
 
@@ -194,6 +267,15 @@ export async function submitContactForm(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "Please enter a valid email address.",
+    };
+  }
+
+  // MX Record check
+  const hasMX = await hasValidMXRecord(email);
+  if (!hasMX) {
+    return {
+      success: false,
+      message: "The email domain provided does not seem to be valid.",
     };
   }
 
