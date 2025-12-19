@@ -1,5 +1,6 @@
 "use server"
 import nodemailer from "nodemailer"
+import { headers } from "next/headers"
 
 // Create reusable transporter object using SMTP transport
 const createTransporter = () => {
@@ -102,7 +103,7 @@ const forwardConfirmationEmail = async (
   }
 };
 
-async function verifyTurnstileToken(token: string) {
+async function verifyTurnstileToken(token: string, remoteip?: string) {
   const secretKey = process.env.TURNSTILE_SECRET_KEY;
   if (!secretKey) {
     console.error("TURNSTILE_SECRET_KEY is not set");
@@ -112,24 +113,41 @@ async function verifyTurnstileToken(token: string) {
   const formData = new FormData();
   formData.append("secret", secretKey);
   formData.append("response", token);
+  if (remoteip) {
+    formData.append("remoteip", remoteip);
+  }
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
     const result = await fetch(
       "https://challenges.cloudflare.com/turnstile/v0/siteverify",
       {
         body: formData,
         method: "POST",
+        signal: controller.signal,
       }
     );
+
+    clearTimeout(timeoutId);
 
     const outcome = await result.json();
     if (outcome.success) {
       return { success: true };
     } else {
       console.error("Turnstile verification failed:", outcome["error-codes"]);
-      return { success: false, message: "Invalid captcha. Please try again." };
+      const errorCode = outcome["error-codes"]?.[0];
+      let message = "Invalid captcha. Please try again.";
+      if (errorCode === "timeout-or-duplicate") {
+        message = "Captcha expired or already used. Please refresh and try again.";
+      }
+      return { success: false, message };
     }
   } catch (error) {
+    if (error instanceof Error && error.name === "AbortError") {
+      return { success: false, message: "Verification timed out. Please try again." };
+    }
     console.error("Turnstile verification error:", error);
     return { success: false, message: "Verification service unavailable" };
   }
@@ -142,6 +160,10 @@ export async function submitContactForm(prevState: any, formData: FormData) {
   const message = formData.get("message") as string;
   const turnstileToken = formData.get("cf-turnstile-response") as string;
 
+  // Get client IP
+  const headersList = await headers();
+  const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || undefined;
+
   // Basic validation
   if (!name || !email || !subject || !message || !turnstileToken) {
     return {
@@ -151,7 +173,7 @@ export async function submitContactForm(prevState: any, formData: FormData) {
   }
 
   // Verify Turnstile token
-  const verification = await verifyTurnstileToken(turnstileToken);
+  const verification = await verifyTurnstileToken(turnstileToken, ip);
   if (!verification.success) {
     return {
       success: false,
