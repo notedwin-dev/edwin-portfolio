@@ -1,6 +1,6 @@
 "use server"
 import nodemailer from "nodemailer"
-import { headers } from "next/headers"
+import { headers } from "next/headers";
 
 // Create reusable transporter object using SMTP transport
 const createTransporter = () => {
@@ -140,13 +140,17 @@ async function verifyTurnstileToken(token: string, remoteip?: string) {
       const errorCode = outcome["error-codes"]?.[0];
       let message = "Invalid captcha. Please try again.";
       if (errorCode === "timeout-or-duplicate") {
-        message = "Captcha expired or already used. Please refresh and try again.";
+        message =
+          "Captcha expired or already used. Please refresh and try again.";
       }
       return { success: false, message };
     }
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
-      return { success: false, message: "Verification timed out. Please try again." };
+      return {
+        success: false,
+        message: "Verification timed out. Please try again.",
+      };
     }
     console.error("Turnstile verification error:", error);
     return { success: false, message: "Verification service unavailable" };
@@ -162,7 +166,10 @@ export async function submitContactForm(prevState: any, formData: FormData) {
 
   // Get client IP
   const headersList = await headers();
-  const ip = headersList.get("x-forwarded-for") || headersList.get("x-real-ip") || undefined;
+  const ip =
+    headersList.get("x-forwarded-for") ||
+    headersList.get("x-real-ip") ||
+    undefined;
 
   // Basic validation
   if (!name || !email || !subject || !message || !turnstileToken) {
